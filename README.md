@@ -2,7 +2,7 @@
 
 Projet de data science (module Traitement de Données, MAM3  Polytech Nice Sophia, Juin 2026) : peut-on prédire l'issue d'un penalty à partir d'informations connues *avant* la frappe (poste du tireur, latéralité, hauteur visée, contexte de pression) ?
 
-> Projet réalisé en groupe de 3 : **Titouan Bembekoff**, **Rémi Debavelaere** et **Mouaid Mabrouk**. Ce repo est ma version réorganisée du travail de groupe, à des fins de portfolio. Le code original (tel qu'écrit collectivement pendant le projet) est disponible sur [RemDebav/Penalty-analysis](https://github.com/RemDebav/Penalty-analysis).
+> Projet réalisé en groupe de 3 : **Titouan Bembekoff**, **Rémi Debavelaere** et **Mouaid Mabrouk**. Ce repo est ma version réorganisée du travail de groupe, à des fins de portfolio. Le code original (tel qu'écrit collectivement pendant le projet) est disponible sur [RemDebav/Penalty-analysis](https://github.com/RemDebav/Penalty-analysis). Vous trouverez également notre [rapport complet](docs/rapport_projet.pdf) et notre [présentation](docs/presentation.pptx) dans le dossier `docs/`.
 
 ## Contexte
 
