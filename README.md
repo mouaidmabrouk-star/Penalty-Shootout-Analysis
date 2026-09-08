@@ -1,12 +1,12 @@
 # Analyse Statistique et Modélisation des Tirs au But
 
-Projet de data science (module Traitement de Données, MAM3 — Polytech Nice Sophia, Juin 2026) : peut-on prédire l'issue d'un penalty à partir d'informations connues *avant* la frappe (poste du tireur, latéralité, hauteur visée, contexte de pression) ?
+Projet de data science (module Traitement de Données, MAM3  Polytech Nice Sophia, Juin 2026) : peut-on prédire l'issue d'un penalty à partir d'informations connues *avant* la frappe (poste du tireur, latéralité, hauteur visée, contexte de pression) ?
 
 > Projet réalisé en groupe de 3 : **Titouan Bembekoff**, **Rémi Debavelaere** et **Mouaid Mabrouk**. Ce repo est ma version réorganisée du travail de groupe, à des fins de portfolio. Le code original (tel qu'écrit collectivement pendant le projet) est disponible sur [RemDebav/Penalty-analysis](https://github.com/RemDebav/Penalty-analysis).
 
 ## Contexte
 
-Suite à la défaite de la France contre l'Argentine en finale de la Coupe du Monde 2022 (aux tirs au but), la séance de penaltys est souvent qualifiée de « loterie ». Ce projet cherche à déconstruire cette idée : le tir au but est un geste technique exécuté sous forte contrainte psychologique, qui répond à des probabilités modélisables.
+La séance de penaltys est souvent qualifiée de « loterie ». Ce projet cherche à déconstruire cette idée : le tir au but est un geste technique exécuté sous forte contrainte psychologique, qui répond à des probabilités modélisables.
 
 L'objectif : transformer un jeu de données historique en outil d'aide à la décision tactique, en répondant à 3 questions :
 - Comment optimiser l'ordre de passage des tireurs face à la pression de la « mort subite » ?
@@ -21,25 +21,25 @@ L'objectif : transformer un jeu de données historique en outil d'aide à la dé
 
 ## Méthodologie
 
-**1. Data visualisation** — exploration du taux de réussite selon la zone, la latéralité, le contexte de pression (voir `figures/`).
+**1. Data visualisation**  exploration du taux de réussite selon la zone, la latéralité, le contexte de pression (voir `figures/`).
 
-**2. Feature engineering** — deux variables métier construites à la main :
-- `Mort_Subite` : variable binaire, activée à partir du 11ème tir de la séance (6ème tireur), point de bascule psychologique non linéaire.
-- `Hauteur` : regroupement des 9 zones brutes en 3 catégories (Bas / Milieu / Haut), plus robuste statistiquement que le découpage fin.
+**2. Feature engineering**  deux variables métier construites à la main :
+ `Mort_Subite` : variable binaire, activée à partir du 11ème tir de la séance (6ème tireur), point de bascule psychologique non linéaire.
+ `Hauteur` : regroupement des 9 zones brutes en 3 catégories (Bas / Milieu / Haut), plus robuste statistiquement que le découpage fin.
 
 **3. Modélisation par régression logistique**, avec 3 choix méthodologiques déterminants :
-- **Prévention des fuites de données** : exclusion de la direction du plongeon du gardien et du fait que le tir soit cadré — ces informations ne sont connues qu'au moment de la frappe, pas avant. Étude restreinte aux tirs cadrés uniquement.
-- **Gestion du déséquilibre des classes** (~77% de buts) via `class_weight='balanced'`.
-- **Évaluation par AUC** (aire sous la courbe ROC) plutôt que par précision — la précision est trompeuse sur des classes déséquilibrées (un modèle naïf prédisant systématiquement "but" atteindrait déjà 77%).
+ **Prévention des fuites de données** : exclusion de la direction du plongeon du gardien et du fait que le tir soit cadré ces informations ne sont connues qu'au moment de la frappe, pas avant. Étude restreinte aux tirs cadrés uniquement.
+ **Gestion du déséquilibre des classes** (~77% de buts) via `class_weight='balanced'`.
+ **Évaluation par AUC** (aire sous la courbe ROC) plutôt que par précision la précision est trompeuse sur des classes déséquilibrées (un modèle naïf prédisant systématiquement "but" atteindrait déjà 77%).
 
 ## Résultats
 
 - Meilleur modèle (avec variables handcrafted) : AUC ≈ 0,635, contre 0,621 pour le modèle de base.
 - Le modèle identifie correctement ~70% des arrêts (au prix de fausses alertes sur les buts), là où un modèle naïf n'en détecterait aucun.
-- Le gain apporté par les variables handcrafted est présent mais modeste (+0,014 d'AUC) : une fois écartées les variables liées à la frappe elle-même, l'issue d'un penalty reste en grande partie imprévisible — ce qui fait la tension de l'exercice.
+- Le gain apporté par les variables handcrafted est présent mais modeste (+0,014 d'AUC) : une fois écartées les variables liées à la frappe elle-même, l'issue d'un penalty reste en grande partie imprévisible  ce qui fait la tension de l'exercice.
 - Facteur le plus significatif : viser haut augmente nettement les chances de marquer.
 
-> **Note sur la reproductibilité** : le script `model.py` de ce repo a été reconstruit pour suivre fidèlement la méthodologie décrite ci-dessus (AUC, `class_weight='balanced'`, exclusion des fuites de données). En exécution, il donne des résultats proches mais pas strictement identiques à ceux du rapport (AUC ≈ 0,62 selon le tirage de la validation croisée) — la variation vient du découpage aléatoire des plis et de détails de nettoyage propres à l'exécution originale.
+> **Note sur la reproductibilité** : le script `model.py` de ce repo a été reconstruit pour suivre fidèlement la méthodologie décrite ci-dessus (AUC, `class_weight='balanced'`, exclusion des fuites de données). En exécution, il donne des résultats proches mais pas strictement identiques à ceux du rapport (AUC ≈ 0,62 selon le tirage de la validation croisée)  la variation vient du découpage aléatoire des plis et de détails de nettoyage propres à l'exécution originale.
 
 ## Structure du repo
 
